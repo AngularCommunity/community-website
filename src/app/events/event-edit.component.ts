@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Event } from '../shared/models';
 import { EventFormComponent } from './event-form.component';
-import { Observable } from 'rxjs/Rx'; // load the full rxjs
+import { Observable } from 'rxjs/Observable'; // load the full rxjs
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService, FirebaseTypedService } from '../shared/firebase.service';
 

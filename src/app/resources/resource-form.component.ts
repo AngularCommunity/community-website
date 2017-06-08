@@ -1,7 +1,6 @@
 import { Component, Output, Input, EventEmitter, OnChanges } from '@angular/core';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
-import 'rxjs/Rx';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { RefirebasePipe } from '../shared/refirebase.pipe';
 import { Resource } from '../shared/models';
 

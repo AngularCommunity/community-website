@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { Expert, Community } from '../shared/models';
 import { PickerComponent } from '../shared/picker.component';
 import { AuthService } from '../shared/auth.service';

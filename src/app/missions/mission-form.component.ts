@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { Mission, Expert } from '../shared/models';
 import { PickerComponent } from '../shared/picker.component';
 import { AngularFireDatabase } from 'angularfire2/database';

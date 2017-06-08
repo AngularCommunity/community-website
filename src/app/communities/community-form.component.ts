@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { Community, Expert } from '../shared/models';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireDatabase } from 'angularfire2/database';

@@ -1,10 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Mission } from '../shared/models';
-import { Observable, ReplaySubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { FirebaseListObservable, FirebaseObjectObservable, AngularFireDatabase } from 'angularfire2/database';
 import { Router } from '@angular/router';
 
-import "../shared/shareResults";
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/shareReplay';
+
 import { AngularFireAuth } from "angularfire2/auth";
 
 import * as firebase from 'firebase/app';
@@ -20,7 +23,7 @@ export class AuthService {
     uid: Observable<string>;
     
     constructor(public db: AngularFireDatabase, public auth: AngularFireAuth, private zone: NgZone, private router : Router) {
-        this.userData = auth.authState.flatMap( authState => {
+        this.userData = auth.authState.switchMap( authState => {
             // Overcome angularfire's zone smashing
             return zone.run((): Observable<any> => {
                 if(authState) {
@@ -34,7 +37,7 @@ export class AuthService {
                 
             });
             
-        }).shareResults();
+        }).shareReplay(1);
 
         // Detect missing user data and forward to quick-profile
         this.userData.subscribe( authState => {
@@ -61,9 +64,9 @@ export class AuthService {
             });
         }).map( adminObject => 
              (adminObject && adminObject['$value'] === true)
-        ).shareResults();
+        ).shareReplay(1);
         
-        this.isUser =  this.auth.authState.map( authState => !!authState).shareResults();
+        this.isUser =  this.auth.authState.map( authState => !!authState).shareReplay(1);
         
         this.uid = this.auth.authState.switchMap( authState => {
             if(!authState) {
@@ -71,7 +74,7 @@ export class AuthService {
             } else {
                 return Observable.of(authState.uid);
             }
-        }).shareResults();
+        }).shareReplay(1);
 
         
         

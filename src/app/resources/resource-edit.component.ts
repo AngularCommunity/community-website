@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResourceFormComponent } from './resource-form.component';
 import { Resource } from '../shared/models';
 import { FirebaseService, FirebaseTypedService } from '../shared/firebase.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { FirebaseObjectObservable, AngularFireDatabase } from 'angularfire2/database';
 
 @Component({

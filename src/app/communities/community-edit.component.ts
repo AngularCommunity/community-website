@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Community } from '../shared/models';
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService, FirebaseTypedService } from '../shared/firebase.service';
 

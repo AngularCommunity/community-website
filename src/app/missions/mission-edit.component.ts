@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MissionFormComponent } from './mission-form.component';
 import { Mission } from '../shared/models';
 import { FirebaseService, FirebaseTypedService } from '../shared/firebase.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/operator/switchMap';
 
 @Component({
 
@@ -19,7 +21,7 @@ export class MissionEditComponent {
     constructor(public route: ActivatedRoute, public router: Router, public fs: FirebaseService) {
         this.missionService = fs.attach<Mission>('/missions/');
 
-        this.mission = route.params.flatMap(params => {
+        this.mission = route.params.switchMap(params => {
             return this.missionService.get(params['id']);
         });
         route.params.subscribe(next => this.id = next['id'], error => console.error(error), () => console.log('finished'));

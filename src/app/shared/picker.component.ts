@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { Expert } from '../shared/models';
 
-import "./shareResults";
+import 'rxjs/add/operator/shareReplay';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 export interface HasKey {
@@ -48,7 +48,7 @@ export class PickerComponent implements OnInit {
     }
     ngOnInit() {
         // retreive the configuration for available options and lookup in fb
-        this.available = this.db.list(this.list, { query: { orderByChild: this.order } }).shareResults();
+        this.available = this.db.list(this.list, { query: { orderByChild: this.order } }).shareReplay(1);
         if (!this.selected) {
             this.selected = [];
         }

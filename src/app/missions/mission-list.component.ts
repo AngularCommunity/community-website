@@ -4,7 +4,7 @@ import { FirebaseService } from '../shared/firebase.service';
 import { AuthService } from '../shared/auth.service';
 import { Mission } from '../shared/models';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
 

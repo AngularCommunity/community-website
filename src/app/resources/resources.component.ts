@@ -1,9 +1,9 @@
 import { Component, Pipe, PipeTransform, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { RefirebasePipe } from '../shared/refirebase.pipe';
 import { AuthService } from '../shared/auth.service';
 
-import "../shared/shareResults";
+import 'rxjs/add/operator/shareReplay';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 declare var firebase: any;
@@ -23,7 +23,7 @@ export class ResourcesComponent implements OnInit{
     priorityMode: boolean;
 
     constructor(public db: AngularFireDatabase, public auth: AuthService) {
-        this.data = db.list('/resources').shareResults();
+        this.data = db.list('/resources').shareReplay(1);
 
     }
 
