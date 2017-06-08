@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from '../shared/firebase.service';
 import { AuthService } from '../shared/auth.service';
 import { Mission } from '../shared/models';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,10 +14,10 @@ import { Observable } from 'rxjs';
 export class MissionListComponent implements OnInit {
     list: FirebaseListObservable<Mission[]>;
     newMission: Mission;
-    constructor(public af: AngularFire, public auth: AuthService, public route: ActivatedRoute, public router: Router) {
+    constructor(public db: AngularFireDatabase, public auth: AuthService, public route: ActivatedRoute, public router: Router) {
     }
     ngOnInit() {
-        this.list = this.af.database.list('/missions/');
+        this.list = this.db.list('/missions/');
         this.newMission = new Mission();
     }
     createMission() {

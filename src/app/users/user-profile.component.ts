@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../shared/auth.service';
 
 @Component({
@@ -9,12 +9,12 @@ import { AuthService } from '../shared/auth.service';
     templateUrl: './user-profile.component.html',
 })
 export class UserProfileComponent {
-    auth: Observable<any>;
+    auth;
     userData: Observable<any>;
     showId: boolean;
 
     constructor(public authService : AuthService, public router : Router ) {
-        this.auth = authService.af.auth;
+        this.auth = authService.auth;
         this.userData = authService.userData;
     }
 

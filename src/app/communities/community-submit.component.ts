@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Community } from '../shared/models';
 import { Router } from '@angular/router';
-import { AngularFire } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
 
@@ -14,13 +14,13 @@ export class CommunitySubmitComponent {
     id: string;
 
 
-    constructor(public af: AngularFire, public router: Router) {
+    constructor(public db: AngularFireDatabase, public router: Router) {
         this.community = new Community();
     }
 
     processUpdate(item: Community) {
         delete item.$key;
-        this.af.database.list('/queues/communities/')
+        this.db.list('/queues/communities/')
             .push(item);
         this.router.navigate(['/communities']);
     }

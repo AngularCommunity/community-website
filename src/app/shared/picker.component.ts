@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Expert } from '../shared/models';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
 import "./shareResults";
+import { AngularFireDatabase } from 'angularfire2/database';
 
 export interface HasKey {
     $key: string;
@@ -43,12 +43,12 @@ export class PickerComponent implements OnInit {
 
     available: Observable<HasKey[]>;
 
-    constructor(private af: AngularFire) {
+    constructor(private db: AngularFireDatabase) {
 
     }
     ngOnInit() {
         // retreive the configuration for available options and lookup in fb
-        this.available = this.af.database.list(this.list, { query: { orderByChild: this.order } }).shareResults();
+        this.available = this.db.list(this.list, { query: { orderByChild: this.order } }).shareResults();
         if (!this.selected) {
             this.selected = [];
         }

@@ -23,10 +23,12 @@ export class ExpertViewComponent {
     constructor(private route: ActivatedRoute, private fs: FirebaseService, title: Title) {
         this.expertService = fs.attach<Expert>('/users/');
 
+        console.log("Expert service is",this.expertService);
         // This calls .subscribe so we don't rely on the template for unrolling
         // the observable (which requires 2 components)
         route.params.subscribe(params =>
-            this.expertService.get(params['id']).subscribe((expert) => {
+            this.expertService.get(params['id'])
+            .subscribe((expert) => {
                 this.expert = expert;
                 title.setTitle(this.expert.name);
             })

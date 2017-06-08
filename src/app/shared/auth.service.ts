@@ -1,10 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Mission } from '../shared/models';
 import { Observable, ReplaySubject } from 'rxjs/Rx';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, AuthProviders, AuthMethods } from 'angularfire2';
+import { FirebaseListObservable, FirebaseObjectObservable, AngularFireDatabase } from 'angularfire2/database';
 import { Router } from '@angular/router';
 
 import "../shared/shareResults";
+import { AngularFireAuth } from "angularfire2/auth";
+
+import * as firebase from 'firebase/app';
 
 declare var Zone;
 
@@ -16,13 +19,12 @@ export class AuthService {
     isUser: Observable<boolean>;
     uid: Observable<string>;
     
-    constructor(public af: AngularFire, private zone: NgZone, private router : Router) {
-        
-        this.userData = this.af.auth.flatMap( authState => {
+    constructor(public db: AngularFireDatabase, public auth: AngularFireAuth, private zone: NgZone, private router : Router) {
+        this.userData = auth.authState.flatMap( authState => {
             // Overcome angularfire's zone smashing
             return zone.run((): Observable<any> => {
                 if(authState) {
-                    this.updatableUser = af.database.object('/users/'+authState.uid);
+                    this.updatableUser = db.object('/users/'+authState.uid);
                     return this.updatableUser;
                 } else {
                     this.updatableUser = null;
@@ -44,13 +46,13 @@ export class AuthService {
        // isAdmin should be an observable that sends trues of falses as the users gains or loses admin access
        // Need to combine two streams. take the stream of auth data, and use it to generate a stream of values
        // for the /admin/[userid] and then check to see if the user is an admin
-        this.isAdmin =  this.af.auth.switchMap( authState => {
+        this.isAdmin =  this.auth.authState.switchMap( authState => {
             // Overcome angularfire's zone smashing
             return zone.run((): Observable<boolean> => {
                 if(!authState) {
                     return Observable.of(false);
                 } else {
-                    return this.af.database.object('/admin/'+authState.uid)
+                    return this.db.object('/admin/'+authState.uid)
                     .catch((a, b) => {
                         // This permission error means we aren't an admin
                         return Observable.of(false)
@@ -61,9 +63,9 @@ export class AuthService {
              (adminObject && adminObject['$value'] === true)
         ).shareResults();
         
-        this.isUser =  this.af.auth.map( authState => !!authState).shareResults();
+        this.isUser =  this.auth.authState.map( authState => !!authState).shareResults();
         
-        this.uid = this.af.auth.switchMap( authState => {
+        this.uid = this.auth.authState.switchMap( authState => {
             if(!authState) {
                 return Observable.of(null);
             } else {
@@ -76,33 +78,11 @@ export class AuthService {
         
     }
     loginGoogle() {
-        this.af.auth.login({
-            provider: AuthProviders.Google,
-            method: AuthMethods.Popup,
-        });
-        
-        
+        this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     }
-    loginPassword(username : string, password : string) {
-        this.af.auth.login(
-            {
-                email: username,
-                password: password
-            },
-            {
-                method: AuthMethods.Password,
-                provider: AuthProviders.Password}
-            );
-    }
-    
-    loginAnonymous() {
-        this.af.auth.login({
-            provider: AuthProviders.Anonymous,
-            method: AuthMethods.Anonymous
-        })
-    }
+
     logout() {
-        this.af.auth.logout();
+        this.auth.auth.signOut();
     }
     
     /**

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import { Expert, Community } from '../shared/models';
 import { PickerComponent } from '../shared/picker.component';
 import { AuthService } from '../shared/auth.service';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class ExpertFormComponent {
 
     newContent: {type: string,title: string,url: string, $key?: string} = {type:null,title:null,url:null};
 
-    constructor(public auth : AuthService, public af : AngularFire) { }
+    constructor(public auth : AuthService, public db: AngularFireDatabase) { }
 
     save(savedValue: Expert) {
         event.preventDefault();
@@ -58,13 +58,13 @@ export class ExpertFormComponent {
     createContent() {
 
         if(this.newContent.$key) {
-            let contentObject = this.af.database.object('/users/' + this.expert.$key + '/content/' + this.newContent.$key);
+            let contentObject = this.db.object('/users/' + this.expert.$key + '/content/' + this.newContent.$key);
             let key = this.newContent.$key;
             delete this.newContent.$key;
             contentObject.update(this.newContent);
             this.newContent.$key = key;
         } else {
-            let contentList = this.af.database.list('/users/' + this.expert.$key + "/content/");
+            let contentList = this.db.list('/users/' + this.expert.$key + "/content/");
             contentList.push(this.newContent);
             this.newContent = {title:null,type:null,url:null};
         }

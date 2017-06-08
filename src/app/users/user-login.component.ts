@@ -3,8 +3,6 @@ import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../shared/auth.service';
-import { FirebaseObjectObservable } from 'angularfire2';
-
 
 @Component({
 

@@ -6,7 +6,7 @@ import { RefirebasePipe } from '../shared/refirebase.pipe';
 import { Expert } from '../shared/models';
 import { AuthService } from '../shared/auth.service';
 
-import { AngularFire } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { FireJoinPipe } from '../shared/fire-join.pipe';
 import { SortPipe } from '../shared/utility-pipes.pipe';
 
@@ -20,10 +20,10 @@ export class ExpertsComponent {
     experts;
     auth;
 
-    constructor(private router: Router, private authService: AuthService, private af: AngularFire) {
-        this.experts = af.database.list('/experts/').map(list => {
+    constructor(private router: Router, private authService: AuthService, private db: AngularFireDatabase) {
+        this.experts = db.list('/experts/').map(list => {
             list.forEach(item => {
-                item.observable = af.database.object('/users/' + item.$key);
+                item.observable = db.object('/users/' + item.$key);
             });
             return list;
         });

@@ -6,8 +6,8 @@ import { RefirebasePipe } from '../shared/refirebase.pipe';
 import { Expert } from '../shared/models';
 import { AuthService } from '../shared/auth.service';
 
-import { AngularFire } from 'angularfire2';
 import { FireJoinPipe } from '../shared/fire-join.pipe';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
 
@@ -19,8 +19,8 @@ export class DevelopersComponent {
     experts;
     auth;
 
-    constructor(public router: Router, public authService: AuthService, public af: AngularFire) {
-        this.experts = af.database.list('/users/');
+    constructor(public router: Router, public authService: AuthService, public db: AngularFireDatabase) {
+        this.experts = db.list('/users/');
         this.auth = authService;
     }
 

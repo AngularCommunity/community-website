@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Mission, Expert } from '../shared/models';
 import { PickerComponent } from '../shared/picker.component';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
 
@@ -17,8 +17,8 @@ export class MissionFormComponent {
 
     developers: Observable<Expert[]>;
 
-    constructor(private af: AngularFire) {
-        this.developers = this.af.database.list('/users/', { query: { orderByChild: 'name' } });
+    constructor(private db: AngularFireDatabase) {
+        this.developers = this.db.list('/users/', { query: { orderByChild: 'name' } });
     }
     save() {
         event.preventDefault();

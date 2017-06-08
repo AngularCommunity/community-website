@@ -5,6 +5,8 @@ import { AmesAppComponent } from './ames.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { MdInputModule } from '@angular/material';
 import { MdCardModule } from '@angular/material';
@@ -93,6 +95,8 @@ import { CommunityFormComponent } from './communities/community-form.component';
             databaseURL: "https://project-4800661445983438923.firebaseio.com/",
             storageBucket: "project-4800661445983438923.appspot.com",
         }),
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
     ],
     entryComponents: [AmesAppComponent],
     bootstrap: [AmesAppComponent],

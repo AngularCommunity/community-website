@@ -4,7 +4,7 @@ import { ResourceFormComponent } from './resource-form.component';
 import { Resource } from '../shared/models';
 import { FirebaseService, FirebaseTypedService } from '../shared/firebase.service';
 import { Observable } from 'rxjs/Rx';
-import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { FirebaseObjectObservable, AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
 
@@ -20,7 +20,7 @@ export class ResourceEditComponent {
     originalCategory: string;
     originalSubcategory: string;
 
-    constructor(private route: ActivatedRoute, private router: Router, private fs: FirebaseService, private af: AngularFire) {
+    constructor(private route: ActivatedRoute, private router: Router, private fs: FirebaseService, private db: AngularFireDatabase) {
 
 
         this.resource = route.params.switchMap(params => {
@@ -56,7 +56,7 @@ export class ResourceEditComponent {
 
                 delete resource.$key;
 
-                let result = this.af.database.list(`/resources/${category}/${subcategory}/resources/`)
+                let result = this.db.list(`/resources/${category}/${subcategory}/resources/`)
                     .push(resource);
                 console.log(result.key);
 

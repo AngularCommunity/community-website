@@ -1,5 +1,5 @@
 import { Component, Output, Input, EventEmitter, OnChanges } from '@angular/core';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 import { RefirebasePipe } from '../shared/refirebase.pipe';
@@ -20,9 +20,9 @@ export class ResourceFormComponent implements OnChanges {
     subCategories: Observable<any[]>;
 
 
-    constructor(private af: AngularFire) {
+    constructor(private db: AngularFireDatabase) {
         console.log("In the form component");
-        this.data = af.database.list('/resources/');
+        this.data = db.list('/resources/');
         this.categories = this.data.map((items) => {
             return items.map((item) => {
                 return item.$key;
@@ -45,7 +45,7 @@ export class ResourceFormComponent implements OnChanges {
     selectCategory(categoryName) {
         console.log("Selecting ", categoryName);
         this.resource.category = categoryName;
-        this.subCategories = this.af.database.list('/resources/' + categoryName)
+        this.subCategories = this.db.list('/resources/' + categoryName)
             .map(items =>
                 items.map(sub => {
                     if (!this.resource.subcategory) {

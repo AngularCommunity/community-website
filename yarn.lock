@@ -230,9 +230,9 @@ amdefine@1.0.0, amdefine@>=0.0.4:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
 
-angularfire2@2.0.0-beta.7:
-  version "2.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/angularfire2/-/angularfire2-2.0.0-beta.7.tgz#ce4f98467c5a8b2cc1dfd607fda718aee8d64521"
+angularfire2@^4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/angularfire2/-/angularfire2-4.0.0-rc.1.tgz#d73014ac5431c0458ee953214f79953a06528c3f"
 
 ansi-escapes@^2.0.0:
   version "2.0.0"
@@ -1749,9 +1749,9 @@ findup-sync@~0.3.0:
   dependencies:
     glob "~5.0.0"
 
-firebase@^3.6.4:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-3.9.0.tgz#c4237f50f58eeb25081b1839d6cbf175f8f7ed9b"
+firebase@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-4.1.2.tgz#b213ab229eb65e31bdbd1d262059b1bb1edfac1f"
   dependencies:
     dom-storage "^2.0.2"
     faye-websocket "0.9.3"

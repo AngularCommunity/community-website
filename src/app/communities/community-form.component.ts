@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Community, Expert } from '../shared/models';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
 
@@ -18,8 +19,8 @@ export class CommunityFormComponent {
 
     developers: Observable<Expert[]>;
 
-    constructor(public af: AngularFire) {
-        this.developers = this.af.database.list('/users/', { query: { orderByChild: 'name' } });
+    constructor(public db: AngularFireDatabase) {
+        this.developers = db.list('/users/', { query: { orderByChild: 'name' } });
     }
     save(domEvent) {
         domEvent.preventDefault();

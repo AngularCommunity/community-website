@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthService } from './shared/auth.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 import { PickerComponent } from './shared/picker.component';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
     selector: 'login',
@@ -17,8 +18,8 @@ export class AdminComponent {
     admins: FirebaseObjectObservable<any>;
     newData;
 
-    constructor(public auth: AuthService, public af: AngularFire) {
-        this.admins = af.database.object('/admin/');
+    constructor(public auth: AuthService, public db: AngularFireDatabase) {
+        this.admins = db.object('/admin/');
     }
 
     update(adminList) {

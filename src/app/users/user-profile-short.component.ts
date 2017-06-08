@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { AuthService } from '../shared/auth.service';
-import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
 @Component({
 
@@ -14,7 +13,7 @@ export class UserProfileShortComponent {
     user: {name: string};
     showId: boolean;
     
-    constructor(private auth: AuthService, private router: Router, angularFire: AngularFire) {
+    constructor(private auth: AuthService, private router: Router) {
         auth.userData.subscribe(userObject => {
             console.log('Rendering', userObject);
             this.user = userObject;

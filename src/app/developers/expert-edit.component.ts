@@ -4,7 +4,7 @@ import { ExpertFormComponent } from './expert-form.component';
 import { Observable } from 'rxjs/Rx'; // load the full rxjs
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService, FirebaseTypedService } from '../shared/firebase.service';
-import { AngularFire } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
 
@@ -17,7 +17,7 @@ export class ExpertEditComponent {
     id: string;
     expertService: FirebaseTypedService<Expert>;
 
-    constructor(private route: ActivatedRoute, private router: Router, private fs: FirebaseService, private af: AngularFire) {
+    constructor(private route: ActivatedRoute, private router: Router, private fs: FirebaseService, private db: AngularFireDatabase) {
         this.expertService = fs.attach<Expert>('/users/');
         this.expert = <Observable<Expert>>route.params.switchMap(params => {
             return this.expertService.get(params['id']);
@@ -26,7 +26,7 @@ export class ExpertEditComponent {
 
     processUpdate(expertUpdate: Expert) {
         this.expertService.save(expertUpdate);
-        let expertStatus = this.af.database.object("/experts/" + expertUpdate.$key);
+        let expertStatus = this.db.object("/experts/" + expertUpdate.$key);
         try {
             if (expertUpdate.isExpert) {
                 console.log("set expert status to true");
